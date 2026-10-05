@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UTHM IoT | Monitor · Connect · Innovate</title>
+<meta name="description" content="UTHM IoT central platform for monitoring and visualizing IoT deployments across Universiti Tun Hussein Onn Malaysia.">
+<style>
+:root{
+  --bg:#020b13;
+  --panel:#061521;
+  --panel2:#081b2a;
+  --line:#0d3852;
+  --cyan:#08b8ff;
+  --blue:#0787ff;
+  --text:#f4f8fc;
+  --muted:#a9bfd2;
+  --green:#37dc50;
+  --sidebar:226px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:radial-gradient(circle at 70% 0%,#08263a 0,#020b13 38%,#01070c 100%);
+  color:var(--text);
+  font-family:Inter,Segoe UI,Arial,sans-serif;
+  font-size:15px;
+}
+a{color:inherit;text-decoration:none}
+button{font:inherit}
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;width:var(--sidebar);
+  padding:24px 13px 18px;
+  background:linear-gradient(180deg,#03111d 0%,#020b13 100%);
+  border-right:1px solid #0d4665;
+  z-index:20;
+  display:flex;flex-direction:column;
+}
+.brand{text-align:center;margin-bottom:27px}
+.brand-mark{font-size:35px;font-weight:800;letter-spacing:-2px}
+.brand-mark span{color:var(--cyan)}
+.brand-sub{font-size:9px;letter-spacing:1.4px;color:#d6e5ef;margin-top:2px}
+.nav{display:flex;flex-direction:column;gap:4px}
+.nav-label{
+  color:#91abc0;font-size:13px;text-transform:uppercase;
+  margin:25px 8px 8px;letter-spacing:.2px
+}
+.nav-item{
+  display:flex;align-items:center;gap:14px;padding:13px 14px;border-radius:8px;
+  color:#edf6fc;transition:.2s;cursor:pointer
+}
+.nav-item:hover{background:#082337}
+.nav-item.active{background:linear-gradient(90deg,#087ff2,#0877e8);box-shadow:0 8px 20px #006be633}
+.icon{width:24px;text-align:center;font-size:22px}
+.node-status{font-size:13px;color:#b8cfe0;margin-top:3px}
+.online-dot{display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--green);margin-right:7px;box-shadow:0 0 12px #37dc50}
+.coming-dot{display:inline-block;width:11px;height:11px;border-radius:50%;background:#9db2c9;margin-right:7px}
+.side-divider{height:1px;background:#173043;margin:20px 8px 0}
+.side-bottom{margin-top:auto;color:#a9bfd2;padding:10px 8px 0}
+.side-bottom strong{display:block;color:white;margin-bottom:5px}
+.side-bottom small{line-height:1.6}
+.main{margin-left:var(--sidebar);min-height:100vh}
+.hero{
+  min-height:333px;padding:67px 56px 32px;position:relative;overflow:hidden;
+  background-image:linear-gradient(90deg,rgba(2,10,16,.94) 0%,rgba(2,12,19,.72) 38%,rgba(2,12,19,.12) 100%),url("assets/hero-campus.jpg");
+  background-size:cover;background-position:center 16%;
+  border-bottom:1px solid #0b334a;
+}
+.hero:after{
+  content:"";position:absolute;inset:auto 0 0;height:90px;
+  background:linear-gradient(transparent,var(--bg));pointer-events:none
+}
+.hero-inner{position:relative;z-index:2;max-width:900px}
+.accent{width:47px;height:4px;background:var(--cyan);margin-bottom:15px}
+h1{font-size:70px;line-height:.95;margin:0;font-weight:800;letter-spacing:-3px}
+h1 span{color:var(--cyan)}
+.tagline{letter-spacing:5px;font-size:13px;margin:13px 0 17px;color:#d7e6f1}
+.hero-copy{max-width:610px;color:#d5e5f1;font-size:17px;line-height:1.45}
+.features{display:flex;gap:37px;margin-top:21px;flex-wrap:wrap}
+.feature{display:flex;align-items:center;gap:12px;color:#e7f2fa}
+.feature-box{
+ width:41px;height:41px;border:1px solid #3a7596;border-radius:8px;
+ display:grid;place-items:center;color:#bfeeff;font-size:20px
+}
+.content{padding:14px 40px 40px}
+.section{margin-top:0;margin-bottom:18px}
+.section-title{display:flex;gap:12px;align-items:center;font-size:18px;font-weight:800}
+.section-title:before{content:"";width:6px;height:35px;background:var(--cyan);border-radius:2px}
+.section-desc{color:#b1c7d8;margin:0 0 11px 18px}
+.node-card{
+  display:grid;grid-template-columns:34% 1fr 280px;gap:21px;
+  border:1px solid #0d5073;border-radius:11px;background:linear-gradient(110deg,#061621,#071b2a);
+  padding:10px;overflow:hidden;box-shadow:0 12px 30px #0005
+}
+.node-photo{
+  min-height:200px;border-radius:10px;position:relative;background:url("assets/tasik-kemajuan.jpg") center/cover;
+}
+.node-photo:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#0008,transparent 50%)}
+.status-badge{
+  position:absolute;z-index:2;top:12px;left:13px;padding:8px 13px;border-radius:9px;
+  background:#0c2b19e8;border:1px solid #2ccf52;color:#fff;font-size:13px;font-weight:700
+}
+.node-main{padding:9px 0}
+.node-heading{display:flex;align-items:center;gap:13px}
+.node-symbol{
+ width:61px;height:61px;border:1px solid #087db5;border-radius:9px;
+ display:grid;place-items:center;color:#00b8ff;font-size:32px
+}
+.node-heading h3{margin:0;font-size:22px}
+.arrow{color:var(--cyan);font-size:30px}
+.node-type{color:#c0d4e1;margin-top:5px;line-height:1.4}
+.node-description{color:#bdd0dd;line-height:1.45;margin:12px 0}
+.tags{display:flex;gap:7px;flex-wrap:wrap}
+.tag{background:#0a2233;border:1px solid #123b53;border-radius:8px;padding:9px 10px;color:#d6e8f3;font-size:11px}
+.node-side{
+ border-left:1px solid #164158;padding:8px 14px 8px 20px;
+ display:flex;flex-direction:column;justify-content:space-between
+}
+.stat-label{color:#91aabd;font-size:12px;text-transform:uppercase;letter-spacing:.4px}
+.stat-value{margin-top:8px;font-size:14px}
+.stat-block{padding-bottom:14px;border-bottom:1px solid #17394c;margin-bottom:12px}
+.open-btn{
+ border:0;border-radius:10px;padding:15px;background:linear-gradient(90deg,#0798f7,#1591f2);
+ color:#fff;font-weight:700;cursor:pointer;text-align:center;display:block
+}
+.open-btn:hover{filter:brightness(1.1)}
+.upcoming-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.coming-card{
+ min-height:96px;border:1px dashed #31536a;border-radius:8px;padding:18px;
+ background:linear-gradient(90deg,#06121d,#071827);
+ display:flex;align-items:center;gap:16px
+}
+.coming-icon{
+ width:49px;height:49px;border:1px solid #243f52;border-radius:8px;
+ display:grid;place-items:center;font-size:24px
+}
+.coming-card h4{margin:0 0 6px;font-size:16px}
+.coming-card p{margin:0;color:#afc4d5}
+.info-grid{display:grid;grid-template-columns:1fr 1.1fr 1fr;gap:12px;margin-top:19px}
+.info-card{
+ border:1px solid #0d4562;border-radius:8px;background:#061522;padding:15px 13px 14px;
+ min-height:190px
+}
+.info-head{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px;margin-bottom:12px}
+.info-head .info-icon{color:var(--cyan);font-size:21px}
+.info-card p{color:#bdd0dd;line-height:1.45;margin:0}
+.goal{display:flex;gap:10px;margin:11px 0;color:#c6d7e2}
+.goal i{color:#00baff;font-style:normal}
+.info-btn{
+ display:inline-block;margin-top:13px;border:1px solid #00b9ff;border-radius:8px;padding:8px 13px;
+ font-weight:600;font-size:12px
+}
+.footer{padding:22px 40px 35px;color:#7792a5;font-size:12px;text-align:center}
+@media(max-width:1000px){
+ .sidebar{width:190px}.main{margin-left:190px}.hero{padding:55px 35px}
+ .node-card{grid-template-columns:1fr}.node-side{border-left:0;border-top:1px solid #164158;padding:15px}
+ .upcoming-grid,.info-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:700px){
+ :root{--sidebar:0px}
+ .sidebar{position:fixed;width:100%;height:auto;bottom:auto;right:0;padding:9px 12px;flex-direction:row;align-items:center}
+ .brand{margin:0;text-align:left}.brand-mark{font-size:22px}.brand-sub{display:none}
+ .nav{margin-left:auto;flex-direction:row}.nav-label,.side-divider,.side-bottom,.nav-item:not(.active):not(.mobile-node){display:none}
+ .nav-item{padding:9px}.nav-item.active{background:none;box-shadow:none}
+ .nav-item .nav-text{display:none}.icon{font-size:20px}
+ .main{margin-left:0;padding-top:62px}
+ .hero{min-height:430px;padding:45px 23px 25px;background-position:center}
+ h1{font-size:50px}.tagline{font-size:10px;letter-spacing:3px}
+ .features{gap:14px}.feature{font-size:12px}.content{padding:14px 18px 25px}
+ .upcoming-grid,.info-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<aside class="sidebar">
+  <div class="brand">
+    <div class="brand-mark">UTHM <span>IoT</span></div>
+    <div class="brand-sub">MONITOR · CONNECT · INNOVATE</div>
+  </div>
+
+  <nav class="nav">
+    <a class="nav-item active" href="#home"><span class="icon">⌂</span><span class="nav-text">Home</span></a>
+
+    <div class="nav-label">Deployed Nodes</div>
+    <a class="nav-item mobile-node" href="https://tasikfkee.uthmiot.my">
+      <span class="icon">♢</span>
+      <span class="nav-text">TASIK KEMAJUAN<div class="node-status"><span class="online-dot"></span>Online</div></span>
+    </a>
+
+    <div class="side-divider"></div>
+    <div class="nav-label">Coming Soon</div>
+    <a class="nav-item" href="#upcoming"><span class="icon">◇</span><span class="nav-text">Next Node<div class="node-status"><span class="coming-dot"></span>Coming Soon</div></span></a>
+    <a class="nav-item" href="#upcoming"><span class="icon">◇</span><span class="nav-text">More Nodes<div class="node-status"><span class="coming-dot"></span>Coming Soon</div></span></a>
+
+    <div class="side-divider"></div>
+    <div class="nav-label">About</div>
+    <a class="nav-item" href="#about"><span class="icon">ⓘ</span><span class="nav-text">About UTHM IoT</span></a>
+    <a class="nav-item" href="#developer"><span class="icon">♙</span><span class="nav-text">Developer</span></a>
+  </nav>
+
+  <div class="side-bottom">
+    <strong>▣ &nbsp; UTHM IoT</strong>
+    <div>uthmiot.my</div><br>
+    <small>Smart Monitoring<br>for a Sustainable Future</small>
+  </div>
+</aside>
+
+<main class="main">
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="accent"></div>
+    <h1>UTHM <span>IoT</span></h1>
+    <div class="tagline">MONITOR · CONNECT · INNOVATE</div>
+    <div class="hero-copy">A central platform for monitoring and visualizing IoT deployments across Universiti Tun Hussein Onn Malaysia (UTHM).</div>
+    <div class="features">
+      <div class="feature"><div class="feature-box">▥</div><span>Real-time<br>Monitoring</span></div>
+      <div class="feature"><div class="feature-box">♧</div><span>Multiple<br>IoT Nodes</span></div>
+      <div class="feature"><div class="feature-box">☁</div><span>Data-driven<br>Insights</span></div>
+      <div class="feature"><div class="feature-box">♧</div><span>Towards a<br>Sustainable Campus</span></div>
+    </div>
+  </div>
+</section>
+
+<div class="content">
+<section class="section" id="nodes">
+  <div class="section-title">DEPLOYED NODES</div>
+  <p class="section-desc">Live IoT deployments with real-time monitoring and data visualization.</p>
+
+  <article class="node-card">
+    <div class="node-photo">
+      <div class="status-badge"><span class="online-dot"></span> ONLINE</div>
+    </div>
+    <div class="node-main">
+      <div class="node-heading">
+        <div class="node-symbol">♢</div>
+        <div><h3>TASIK KEMAJUAN <span class="arrow">→</span></h3><div class="node-type">Water Level &amp; Environmental Monitoring<br>(Tasik Kemajuan, UTHM)</div></div>
+      </div>
+      <p class="node-description">Real-time monitoring system for water level and environmental conditions at Tasik Kemajuan, UTHM.</p>
+      <div class="tags">
+        <span class="tag">💧 Water Level</span><span class="tag">🌿 Environmental Monitoring</span><span class="tag">▥ Real-time Graph</span><span class="tag">▤ Historical Data</span>
+      </div>
+    </div>
+    <div class="node-side">
+      <div>
+        <div class="stat-block"><div class="stat-label">Status</div><div class="stat-value"><span class="online-dot"></span>Online</div></div>
+        <div class="stat-block"><div class="stat-label">Last Update</div><div class="stat-value">◷ &nbsp;2 minutes ago</div></div>
+      </div>
+      <a class="open-btn" href="https://tasikfkee.uthmiot.my">Open Dashboard &nbsp; →</a>
+    </div>
+  </article>
+</section>
+
+<section class="section" id="upcoming">
+  <div class="section-title">UPCOMING NODES</div>
+  <p class="section-desc">More IoT deployments are in development. Stay tuned for more locations across UTHM.</p>
+  <div class="upcoming-grid">
+    <div class="coming-card"><div class="coming-icon">◇</div><div><h4>Node 02</h4><p>◷ &nbsp;Coming Soon</p></div></div>
+    <div class="coming-card"><div class="coming-icon">◇</div><div><h4>Node 03</h4><p>◷ &nbsp;Coming Soon</p></div></div>
+    <div class="coming-card"><div class="coming-icon">◇</div><div><h4>More Nodes</h4><p>◷ &nbsp;Coming Soon</p></div></div>
+  </div>
+</section>
+
+<div class="info-grid">
+<section class="info-card" id="about">
+  <div class="info-head"><span class="info-icon">●</span> ABOUT UTHM IoT</div>
+  <p>UTHM IoT is an initiative to integrate IoT technology in monitoring, research and educational activities across Universiti Tun Hussein Onn Malaysia. This platform provides real-time data, insights and visualization from various IoT deployments.</p>
+  <a class="info-btn" href="#developer">Learn More &nbsp; →</a>
+</section>
+
+<section class="info-card">
+  <div class="info-head"><span class="info-icon">◎</span> OUR GOALS</div>
+  <div class="goal"><i>♙</i> Support research and innovation</div>
+  <div class="goal"><i>●</i> Provide real-time environmental monitoring</div>
+  <div class="goal"><i>✓</i> Enhance campus sustainability</div>
+  <div class="goal"><i>◇</i> Serve as a platform for education and collaboration</div>
+</section>
+
+<section class="info-card" id="developer">
+  <div class="info-head"><span class="info-icon">♟</span> DEVELOPER</div>
+  <p><strong style="color:#fff;font-size:16px">UTHM IoT Team</strong></p>
+  <p style="margin-top:8px">Developed and maintained by the UTHM IoT team, comprising researchers, lecturers and students dedicated to IoT, environmental monitoring and smart campus solutions.</p>
+  <a class="info-btn" href="#developer">Meet the Team &nbsp; →</a>
+</section>
+</div>
+</div>
+
+<footer class="footer">© 2026 UTHM IoT · Universiti Tun Hussein Onn Malaysia · uthmiot.my</footer>
+</main>
+</body>
+</html>

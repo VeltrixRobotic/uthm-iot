@@ -52,11 +52,62 @@
 .side-bottom strong{display:block;color:white;margin-bottom:5px}
 .side-bottom small{line-height:1.6}
 .main{margin-left:var(--sidebar);min-height:100vh}.hero{min-height:380px;padding:70px 7vw 52px;position:relative;overflow:hidden;background-image:linear-gradient(90deg,rgba(2,10,16,.96) 0%,rgba(2,12,19,.80) 38%,rgba(2,12,19,.25) 82%,rgba(2,12,19,.50) 100%),linear-gradient(180deg,rgba(2,10,18,.05),rgba(2,10,18,.9)),url("../assets/hero-campus.jpg");background-size:cover;background-position:center 18%;border-bottom:1px solid #0b334a}.hero:after{content:"";position:absolute;inset:auto 0 0;height:100px;background:linear-gradient(transparent,var(--bg));pointer-events:none}.hero-inner{position:relative;z-index:2;max-width:880px}.eyebrow{display:flex;align-items:center;gap:10px;color:var(--cyan);font-size:12px;letter-spacing:3px;font-weight:800;text-transform:uppercase}.eyebrow:before{content:"";width:38px;height:3px;background:var(--cyan)}h1{font-size:clamp(48px,6vw,76px);line-height:.98;margin:15px 0 16px;font-weight:800;letter-spacing:-3px}h1 span{color:var(--cyan)}.hero-copy{max-width:760px;color:#d7e6f1;font-size:18px;line-height:1.65}.content{max-width:1180px;margin:0 auto;padding:54px 42px 80px}.section{margin-bottom:58px}.section-title{font-size:13px;letter-spacing:2.4px;color:var(--cyan);font-weight:800;margin-bottom:10px}.section-heading{font-size:34px;letter-spacing:-1px;margin:0 0 14px}.section-desc{color:var(--muted);line-height:1.75;max-width:820px;margin:0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}.card{background:linear-gradient(180deg,rgba(8,27,42,.94),rgba(5,19,30,.94));border:1px solid #0c4564;border-radius:10px;padding:25px;box-shadow:0 12px 35px #00000024}.card-icon{width:42px;height:42px;border:1px solid #0bbcff66;border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--cyan);font-size:20px;background:#061b2a;margin-bottom:18px}.card h3{margin:0 0 9px;font-size:18px}.card p{margin:0;color:#a9bfd2;line-height:1.65}.story{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:stretch}.story-panel{background:linear-gradient(135deg,#071b2a,#04111c);border:1px solid #0d4562;border-radius:12px;padding:31px}.story-panel h2{margin:0 0 14px;font-size:30px;letter-spacing:-.7px}.story-panel p{color:#b9cedd;line-height:1.8;margin:0 0 15px}.quote{display:flex;gap:14px;padding:20px;border-left:3px solid var(--cyan);background:#051522;border-radius:0 8px 8px 0;color:#dceaf4;line-height:1.65}.timeline{display:grid;gap:12px}.step{display:grid;grid-template-columns:50px 1fr;gap:15px;align-items:start;padding:18px;background:#061521;border:1px solid #0c3c57;border-radius:9px}.step-num{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#062842;color:var(--cyan);border:1px solid #0b86bb;font-weight:800}.step h4{margin:2px 0 6px;font-size:16px}.step p{margin:0;color:#9fb6c8;line-height:1.55}.cta{display:flex;justify-content:space-between;gap:20px;align-items:center;background:linear-gradient(100deg,#06263a,#061521 72%);border:1px solid #0b5a80;border-radius:12px;padding:30px}.cta h2{margin:0 0 7px;font-size:25px}.cta p{margin:0;color:#a9bfd2;line-height:1.6}.btn{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--cyan);border-radius:7px;padding:12px 17px;color:#fff;background:#062337;font-weight:700;white-space:nowrap}.btn:hover{background:#08314a}.footer{text-align:center;padding:25px 20px;color:#70899b;border-top:1px solid #0a2a3e;font-size:12px}
-@media(max-width:850px){:root{--sidebar:0px}.sidebar{position:relative;width:100%;height:auto;padding:14px 15px;border-right:0;border-bottom:1px solid #0d4665}.brand{text-align:left;margin:0 0 12px}.brand-mark{font-size:28px}.nav{display:grid;grid-template-columns:repeat(3,1fr)}.nav-label,.side-divider,.side-bottom{display:none}.nav-item{padding:10px;justify-content:center;font-size:12px;gap:6px}.icon{font-size:17px;width:auto}.main{margin-left:0}.hero{padding:55px 24px 45px;min-height:390px}.content{padding:42px 20px 60px}.grid,.story{grid-template-columns:1fr}.cta{flex-direction:column;align-items:flex-start}.hero-copy{font-size:16px}}
+@media(max-width:850px) and (min-width:701px){.hero{padding:55px 24px 45px;min-height:390px}.content{padding:42px 20px 60px}.grid,.story{grid-template-columns:1fr}.cta{flex-direction:column;align-items:flex-start}.hero-copy{font-size:16px}}
 @media(max-width:520px){.nav{grid-template-columns:repeat(2,1fr)}h1{font-size:49px}.section-heading{font-size:28px}.content{padding-left:15px;padding-right:15px}.card,.story-panel{padding:22px}.cta{padding:24px}}
+
+/* Mobile collapsible navigation */
+.mobile-header{display:none}
+.mobile-menu{display:none}
+@media(max-width:700px){
+  .sidebar{display:none}
+  .mobile-header{position:sticky;top:0;z-index:100;display:flex;align-items:center;justify-content:space-between;height:76px;padding:0 20px;background:rgba(2,11,19,.97);border-bottom:1px solid #0d4665;box-shadow:0 8px 24px #0005}
+  .mobile-brand{font-size:29px;font-weight:800;letter-spacing:-1.6px;color:#f4f8fc}
+  .mobile-brand span{color:var(--cyan)}
+  .mobile-menu-btn{width:44px;height:44px;border:1px solid #0b5a80;border-radius:10px;background:#061a29;color:#eaf7ff;display:grid;place-items:center;cursor:pointer}
+  .mobile-menu-btn svg{width:23px;height:23px}
+  .mobile-menu{position:fixed;left:0;right:0;top:76px;z-index:99;background:rgba(2,11,19,.985);border-bottom:1px solid #0d4665;box-shadow:0 18px 35px #0008;padding:12px 14px 16px}
+  .mobile-menu.open{display:block}
+  .mobile-menu-list{display:flex;flex-direction:column;gap:4px}
+  .mobile-menu-link{display:flex;align-items:center;gap:13px;padding:13px 14px;border-radius:9px;color:#edf6fc;font-size:15px}
+  .mobile-menu-link:hover,.mobile-menu-link:focus{background:#082337}
+  .mobile-menu-link.active{background:linear-gradient(90deg,#087ff2,#0877e8);box-shadow:0 8px 20px #006be633}
+  .mobile-menu-icon{width:28px;flex:0 0 28px;text-align:center;font-size:20px}
+  .mobile-menu-node{display:flex;align-items:center;gap:10px}
+  .mobile-menu-node img{width:30px;height:30px;object-fit:contain;border-radius:7px}
+  .mobile-menu-node .node-status{font-size:12px;margin-top:2px}
+  .mobile-menu-divider{height:1px;background:#173043;margin:8px 7px}
+  .mobile-menu-label{color:#91abc0;font-size:11px;text-transform:uppercase;letter-spacing:.7px;padding:9px 14px 4px}
+  .main{margin-left:0}
+}
+
 </style>
 </head>
 <body>
+<header class="mobile-header">
+  <div class="mobile-brand">UTHM <span>IoT</span></div>
+  <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Open navigation" aria-expanded="false">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+  </button>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <nav class="mobile-menu-list" aria-label="Mobile navigation">
+    <a class="mobile-menu-link " href="/"><span class="mobile-menu-icon">⌂</span><span>Home</span></a>
+    <div class="mobile-menu-label">Deployed Nodes</div>
+    <a class="mobile-menu-link" href="https://tasikfkee.uthmiot.my">
+      <span class="mobile-menu-node"><img src="../assets/tasik-kemajuan-icon.png" alt="Tasik Kemajuan logo"></span>
+      <span>TASIK KEMAJUAN<div id="mobileNodeStatus" class="node-status status-online"><span class="online-dot"></span>Online</div></span>
+    </a>
+    <div class="mobile-menu-divider"></div>
+    <div class="mobile-menu-label">Coming Soon</div>
+    <a class="mobile-menu-link" href="/#upcoming"><span class="mobile-menu-icon">◇</span><span>Next Node<div class="node-status"><span class="coming-dot"></span>Coming Soon</div></span></a>
+    <a class="mobile-menu-link" href="/#upcoming"><span class="mobile-menu-icon">◇</span><span>More Nodes<div class="node-status"><span class="coming-dot"></span>Coming Soon</div></span></a>
+    <div class="mobile-menu-divider"></div>
+    <div class="mobile-menu-label">About</div>
+    <a class="mobile-menu-link " href="/aboututhmiot/"><span class="mobile-menu-icon">ⓘ</span><span>About UTHM IoT</span></a>
+    <a class="mobile-menu-link active" href="/developer/"><span class="mobile-menu-icon">♙</span><span>Developer</span></a>
+  </nav>
+</div>
+
 <aside class="sidebar">
   <div class="brand">
     <div class="brand-mark">UTHM <span>IoT</span></div>
@@ -115,12 +166,15 @@
 /* Tasik Kemajuan status relay. */
 (function(){
   const el=document.getElementById("sidebarNodeStatus");
-  if(!el) return;
+  const mobile=document.getElementById("mobileNodeStatus");
+  if(!el && !mobile) return;
   function apply(status,state){
     const online=String(status||"").toUpperCase()==="ONLINE";
     const checking=state==="unavailable";
-    el.className="node-status "+(checking?"status-checking":online?"status-online":"status-offline");
-    el.innerHTML='<span class="'+(checking?"coming-dot":online?"online-dot":"offline-dot")+'"></span>'+(checking?"Connecting…":online?"Online":"Offline");
+    const cls="node-status "+(checking?"status-checking":online?"status-online":"status-offline");
+    const html='<span class="'+(checking?"coming-dot":online?"online-dot":"offline-dot")+'"></span>'+(checking?"Connecting…":online?"Online":"Offline");
+    if(el){el.className=cls;el.innerHTML=html;}
+    if(mobile){mobile.className=cls;mobile.innerHTML=html;}
   }
   apply(null,"unavailable");
   const relay=document.createElement("iframe");
@@ -135,6 +189,23 @@
     apply(data.status,data.state);
   });
   document.body.appendChild(relay);
+})();
+</script>
+
+<script>
+(function(){
+  const btn=document.getElementById('mobileMenuBtn');
+  const menu=document.getElementById('mobileMenu');
+  if(!btn||!menu)return;
+  function close(){menu.classList.remove('open');btn.setAttribute('aria-expanded','false');btn.setAttribute('aria-label','Open navigation');}
+  btn.addEventListener('click',()=>{
+    const open=!menu.classList.contains('open');
+    menu.classList.toggle('open',open);
+    btn.setAttribute('aria-expanded',String(open));
+    btn.setAttribute('aria-label',open?'Close navigation':'Open navigation');
+  });
+  menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));
+  document.addEventListener('click',e=>{if(!menu.contains(e.target)&&!btn.contains(e.target))close();});
 })();
 </script>
 </body>

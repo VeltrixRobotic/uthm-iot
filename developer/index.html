@@ -80,6 +80,31 @@
   .main{margin-left:0;padding-top:0}
 }
 
+
+@media(max-width:700px){
+  /* Developer page: keep all content inside the phone viewport */
+  .content{width:100%;max-width:none;padding:34px 16px 55px;overflow:hidden}
+  .grid{grid-template-columns:1fr;gap:14px;margin-top:22px}
+  .card{width:100%;min-width:0;padding:19px;border-radius:10px}
+  .card-icon{width:40px;height:40px;margin-bottom:14px}
+  .card h3{font-size:19px;line-height:1.25;margin-bottom:8px}
+  .card p{font-size:15px;line-height:1.55}
+  .story{grid-template-columns:1fr;gap:14px;width:100%}
+  .story-panel{width:100%;min-width:0;padding:20px;border-radius:10px}
+  .story-panel h2{font-size:27px;line-height:1.1}
+  .story-panel p{font-size:15px;line-height:1.6}
+  .quote{padding:16px;font-size:15px;line-height:1.55}
+  .timeline{gap:10px}
+  .step{grid-template-columns:42px 1fr;gap:11px;padding:14px;min-width:0}
+  .step-num{width:36px;height:36px}
+  .step h4{font-size:17px}
+  .step p{font-size:15px;line-height:1.5}
+  .section{margin-bottom:38px}
+  .section-title{font-size:12px;letter-spacing:2.2px}
+  .section-heading{font-size:28px;line-height:1.15}
+  .section-desc{font-size:15px;line-height:1.6}
+}
+
 </style>
 </head>
 <body>
@@ -155,7 +180,7 @@
 </section>
 <section class="section story">
   <div class="story-panel"><div class="section-title">OUR APPROACH</div><h2>From deployment to platform.</h2><p>Every deployment is treated as part of a wider UTHM IoT ecosystem. The goal is to make sensing infrastructure useful beyond the device itself by connecting measurements to reliable monitoring and clear presentation.</p><p>The platform is designed to grow with future nodes, datasets and campus applications while keeping the user experience simple and consistent.</p><div class="quote">“Build reliable systems, present meaningful data, and create technology that can grow with the campus.”</div></div>
-  <div class="story-panel"><div class="section-title">WORKFLOW</div><div class="timeline"><div class="step"><div class="step-num">01</div><div><h4>Plan</h4><p>Define the monitoring objective, sensing requirements and deployment environment.</p></div></div><div class="step"><div class="step-num">02</div><div><h4>Deploy</h4><p>Install and connect IoT hardware at the selected campus location.</p></div></div><div class="step"><div class="step-num">03</div><div><h4>Integrate</h4><p>Connect telemetry, APIs and dashboards into the UTHM IoT platform.</p></div></div><div class="step"><div class="step-num">04</div><div><h4>Improve</h4><p>Use operational feedback and data to refine future deployments.</p></div></div></div></div>
+  <div class="story-panel"><div class="section-title">WORKFLOW</div><div class="timeline"><div class="step"><div class="step-num">01</div><div><h4>Plan</h4><p>Set the goal, sensor needs and site.</p></div></div><div class="step"><div class="step-num">02</div><div><h4>Deploy</h4><p>Install and connect the IoT hardware.</p></div></div><div class="step"><div class="step-num">03</div><div><h4>Integrate</h4><p>Connect data, APIs and dashboards.</p></div></div><div class="step"><div class="step-num">04</div><div><h4>Improve</h4><p>Use data to improve future deployments.</p></div></div></div></div>
 </section>
 <section class="section"><div class="section-title">PLATFORM DIRECTION</div><h2 class="section-heading">Growing a connected UTHM.</h2><p class="section-desc">As additional IoT deployments are introduced, the team will continue expanding the platform with new monitoring locations, datasets and applications that can support research, education, environmental awareness and smart-campus development.</p></section>
 </div>

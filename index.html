@@ -212,6 +212,63 @@ h1 span{color:var(--cyan)}
   .main{margin-left:0;padding-top:0}
 }
 
+
+/* Partner / organisation logos */
+.logo-showcase{
+  margin:30px 0 6px;
+  padding:8px 0 2px;
+  text-align:center;
+}
+.logo-group + .logo-group{margin-top:26px}
+.logo-group-label{
+  color:#6fa8c7;
+  font-size:11px;
+  font-weight:700;
+  letter-spacing:2.4px;
+  text-transform:uppercase;
+  margin-bottom:15px;
+}
+.logo-row{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:56px;
+  flex-wrap:wrap;
+}
+.logo-row.developer-logos{gap:64px}
+.logo-item{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-width:0;
+}
+.logo-item img{
+  display:block;
+  width:auto;
+  height:auto;
+  max-width:100%;
+  object-fit:contain;
+}
+.developer-logos .logo-item:first-child img{width:230px;max-height:115px}
+.developer-logos .logo-item:last-child img{width:245px;max-height:115px}
+.org-logos{gap:48px}
+.org-logos .logo-item:nth-child(1) img{width:250px;max-height:86px}
+.org-logos .logo-item:nth-child(2) img{width:230px;max-height:82px}
+.org-logos .logo-item:nth-child(3) img{width:220px;max-height:70px}
+.footer{padding-top:24px}
+@media(max-width:700px){
+  .logo-showcase{margin:25px 0 3px;padding:4px 4px 0}
+  .logo-group + .logo-group{margin-top:23px}
+  .logo-group-label{font-size:9px;letter-spacing:2px;margin-bottom:12px}
+  .logo-row.developer-logos{gap:24px}
+  .developer-logos .logo-item:first-child img{width:145px;max-height:78px}
+  .developer-logos .logo-item:last-child img{width:150px;max-height:78px}
+  .org-logos{gap:18px 22px}
+  .org-logos .logo-item:nth-child(1) img{width:170px;max-height:62px}
+  .org-logos .logo-item:nth-child(2) img{width:150px;max-height:56px}
+  .org-logos .logo-item:nth-child(3) img{width:145px;max-height:50px}
+}
+
 </style>
 </head>
 <body>
@@ -350,6 +407,25 @@ h1 span{color:var(--cyan)}
   <a class="info-btn" href="/developer/">Meet the Team &nbsp; →</a>
 </section>
 </div>
+</div>
+
+<div class="logo-showcase" aria-label="Development and organisation partners">
+  <div class="logo-group">
+    <div class="logo-group-label">Developed By</div>
+    <div class="logo-row developer-logos">
+      <div class="logo-item"><img src="assets/3dlab-logo.png" alt="3D Lab Research Solutions"></div>
+      <div class="logo-item"><img src="assets/veltrix-robotic-logo.png" alt="Veltrix Robotic"></div>
+    </div>
+  </div>
+
+  <div class="logo-group">
+    <div class="logo-group-label">Organisations</div>
+    <div class="logo-row org-logos">
+      <div class="logo-item"><img src="assets/uthm-official-logo.png" alt="Universiti Tun Hussein Onn Malaysia"></div>
+      <div class="logo-item"><img src="assets/fkee-logo.png" alt="Faculty of Electrical and Electronic Engineering, UTHM"></div>
+      <div class="logo-item"><img src="assets/innocube-logo.png" alt="InnoCube"></div>
+    </div>
+  </div>
 </div>
 
 <footer class="footer">© 2026 UTHM IoT · 3D Lab · Veltrix Robotic · uthmiot.my</footer>

@@ -174,6 +174,8 @@ h1 span{color:var(--cyan)}
  .nav{margin-left:auto;flex-direction:row}.nav-label,.side-divider,.side-bottom,.nav-item:not(.active):not(.mobile-node){display:none}
  .nav-item{padding:9px}.nav-item.active{background:none;box-shadow:none}
  .nav-item .nav-text{display:none}.icon{font-size:20px}
+ .node-icon{width:27px;height:27px;border-radius:50%;overflow:hidden;display:grid;place-items:center}
+ .node-icon img{width:100%;height:100%;object-fit:cover;display:block}
  .main{margin-left:0;padding-top:62px}
  .hero{min-height:430px;padding:45px 23px 25px;background-position:center}
  h1{font-size:50px}.tagline{font-size:10px;letter-spacing:3px}
@@ -205,8 +207,8 @@ h1 span{color:var(--cyan)}
 
     <div class="side-divider"></div>
     <div class="nav-label">About</div>
-    <a class="nav-item" href="#about"><span class="icon">ⓘ</span><span class="nav-text">About UTHM IoT</span></a>
-    <a class="nav-item" href="#developer"><span class="icon">♙</span><span class="nav-text">Developer</span></a>
+    <a class="nav-item" href="/aboututhmiot/"><span class="icon">ⓘ</span><span class="nav-text">About UTHM IoT</span></a>
+    <a class="nav-item" href="/developer/"><span class="icon">♙</span><span class="nav-text">Developer</span></a>
   </nav>
 
   <div class="side-bottom">
@@ -243,7 +245,7 @@ h1 span{color:var(--cyan)}
     </div>
     <div class="node-main">
       <div class="node-heading">
-        <div class="node-symbol">♢</div>
+        <div class="node-symbol"><img src="assets/tasik-kemajuan-icon.png" alt="Tasik Kemajuan IoT"></div>
         <div><h3>TASIK KEMAJUAN <span class="arrow">→</span></h3><div class="node-type">Water Level &amp; Environmental Monitoring<br>(Tasik Kemajuan, UTHM)</div></div>
       </div>
       <p class="node-description">Real-time monitoring system for water level and environmental conditions at Tasik Kemajuan, UTHM.</p>
@@ -275,7 +277,7 @@ h1 span{color:var(--cyan)}
 <section class="info-card" id="about">
   <div class="info-head"><span class="info-icon">●</span> ABOUT UTHM IoT</div>
   <p>UTHM IoT is an initiative to integrate IoT technology in monitoring, research and educational activities across Universiti Tun Hussein Onn Malaysia. This platform provides real-time data, insights and visualization from various IoT deployments.</p>
-  <a class="info-btn" href="about.html">Learn More &nbsp; →</a>
+  <a class="info-btn" href="/aboututhmiot/">Learn More &nbsp; →</a>
 </section>
 
 <section class="info-card">
@@ -290,7 +292,7 @@ h1 span{color:var(--cyan)}
   <div class="info-head"><span class="info-icon">♟</span> DEVELOPER</div>
   <p><strong style="color:#fff;font-size:16px">UTHM IoT Team</strong></p>
   <p style="margin-top:8px">Developed and maintained by the UTHM IoT team, comprising researchers, lecturers and students dedicated to IoT, environmental monitoring and smart campus solutions.</p>
-  <a class="info-btn" href="#developer">Meet the Team &nbsp; →</a>
+  <a class="info-btn" href="/developer/">Meet the Team &nbsp; →</a>
 </section>
 </div>
 </div>

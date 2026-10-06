@@ -61,6 +61,8 @@ button{font:inherit}
 .offline-dot{background:#ff3b45;box-shadow:0 0 12px #ff3b45}
 .status-online{color:#8ff6a0}
 .status-offline{color:#ff8b91}
+.status-checking{color:#73d8ff}
+.status-badge.status-checking{background:#08283ae8;border-color:#19a9e8}
 .status-badge.status-online{background:#0c2b19e8;border-color:#2ccf52}
 .status-badge.status-offline{background:#351318e8;border-color:#ff3b45}
 .coming-dot{display:inline-block;width:11px;height:11px;border-radius:50%;background:#9db2c9;margin-right:7px}
@@ -296,63 +298,69 @@ h1 span{color:var(--cyan)}
 <footer class="footer">© 2026 UTHM IoT · Universiti Tun Hussein Onn Malaysia · uthmiot.my</footer>
 </main>
 <script>
-/* Live Tasik Kemajuan status: the API's status field is the source of truth. */
+/* Live Tasik Kemajuan status relay.
+   The relay is hosted on tasikfkee.uthmiot.my, where the dashboard already
+   has working access to the telemetry API. This avoids a second CORS path
+   from uthmiot.my -> api.veltrixrobotic.com. */
 (function(){
-  // Try the same API used by the Tasik Kemajuan dashboard first.
-  // The dashboard host is kept as a fallback in case the API host has a stricter CORS policy.
-  const latestUrls=[
-    "https://api.veltrixrobotic.com/api/tasikfkee/latest",
-    "https://tasikfkee.uthmiot.my/api/tasikfkee/latest"
-  ];
   const sidebar=document.getElementById("sidebarNodeStatus");
   const badge=document.getElementById("nodeStatusBadge");
   const value=document.getElementById("nodeStatusValue");
   const last=document.getElementById("nodeLastUpdate");
   if(!sidebar && !badge && !value) return;
 
-  function isOnline(status){ return String(status||"").toUpperCase()==="ONLINE"; }
-  function dot(on){ return '<span class="'+(on?'online-dot':'offline-dot')+'"></span>'; }
-  function label(on){ return on ? "Online" : "Offline"; }
+  function dot(kind){
+    if(kind==="online") return '<span class="online-dot"></span>';
+    if(kind==="offline") return '<span class="offline-dot"></span>';
+    return '<span class="coming-dot"></span>';
+  }
   function formatTime(v){
     if(!v) return "--";
     const d=new Date(v);
     if(Number.isNaN(d.getTime())) return "--";
     return d.toLocaleString("en-MY",{dateStyle:"medium",timeStyle:"short"});
   }
-  function apply(status, received){
-    const on=isOnline(status);
+  function apply(status, received, state){
+    const normalized=String(status||"").toUpperCase();
+    const kind=state==="unavailable" ? "checking" : (normalized==="ONLINE" ? "online" : "offline");
+    const label=state==="unavailable" ? "Connecting…" : (kind==="online" ? "Online" : "Offline");
     if(sidebar){
-      sidebar.className="node-status "+(on?"status-online":"status-offline");
-      sidebar.innerHTML=dot(on)+label(on);
+      sidebar.className="node-status "+(kind==="online"?"status-online":kind==="offline"?"status-offline":"status-checking");
+      sidebar.innerHTML=dot(kind)+label;
     }
     if(badge){
-      badge.className="status-badge "+(on?"status-online":"status-offline");
-      badge.innerHTML=dot(on)+" "+(on?"ONLINE":"OFFLINE");
+      badge.className="status-badge "+(kind==="online"?"status-online":kind==="offline"?"status-offline":"status-checking");
+      badge.innerHTML=dot(kind)+(kind==="online"?" ONLINE":kind==="offline"?" OFFLINE":" CONNECTING…");
     }
     if(value){
-      value.className="stat-value "+(on?"status-online":"status-offline");
-      value.innerHTML=dot(on)+label(on);
+      value.className="stat-value "+(kind==="online"?"status-online":kind==="offline"?"status-offline":"status-checking");
+      value.innerHTML=dot(kind)+label;
     }
     if(last) last.textContent="◷  "+formatTime(received);
   }
-  async function sync(){
-    let lastError=null;
-    for(const url of latestUrls){
-      try{
-        const r=await fetch(url,{cache:"no-store",mode:"cors"});
-        if(!r.ok) throw new Error("HTTP "+r.status);
-        const x=await r.json();
-        // The backend status is authoritative. Do not infer online state from stale UI text.
-        apply(x.status, x.received_at || x.last_seen);
-        return;
-      }catch(e){ lastError=e; }
-    }
-    // Both live endpoints failed. Keep the UI honest rather than presenting stale data as online.
-    apply("OFFLINE", null);
-    console.warn("UTHM IoT status sync failed:",lastError);
-  }
-  sync();
-  setInterval(sync,5000);
+
+  apply(null,null,"unavailable");
+
+  const relay=document.createElement("iframe");
+  relay.src="https://tasikfkee.uthmiot.my/status-relay.html?parent="+encodeURIComponent(window.location.origin);
+  relay.setAttribute("aria-hidden","true");
+  relay.tabIndex=-1;
+  relay.style.cssText="position:fixed;width:1px;height:1px;left:-10000px;top:-10000px;border:0;opacity:0;pointer-events:none;";
+  let received=false;
+  let timer=setTimeout(function(){
+    if(!received) apply(null,null,"unavailable");
+  },10000);
+
+  window.addEventListener("message",function(event){
+    if(event.origin!=="https://tasikfkee.uthmiot.my") return;
+    const data=event.data||{};
+    if(data.type!=="tasik-kemajuan-status") return;
+    received=true;
+    clearTimeout(timer);
+    apply(data.status,data.received_at||data.last_seen,data.state);
+  });
+
+  document.body.appendChild(relay);
 })();
 </script>
 </body>

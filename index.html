@@ -56,7 +56,13 @@ button{font:inherit}
 .nav-item.active{background:linear-gradient(90deg,#087ff2,#0877e8);box-shadow:0 8px 20px #006be633}
 .icon{width:24px;text-align:center;font-size:22px}
 .node-status{font-size:13px;color:#b8cfe0;margin-top:3px}
-.online-dot{display:inline-block;width:11px;height:11px;border-radius:50%;background:var(--green);margin-right:7px;box-shadow:0 0 12px #37dc50}
+.online-dot,.offline-dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:7px;vertical-align:middle}
+.online-dot{background:var(--green);box-shadow:0 0 12px #37dc50}
+.offline-dot{background:#ff3b45;box-shadow:0 0 12px #ff3b45}
+.status-online{color:#8ff6a0}
+.status-offline{color:#ff8b91}
+.status-badge.status-online{background:#0c2b19e8;border-color:#2ccf52}
+.status-badge.status-offline{background:#351318e8;border-color:#ff3b45}
 .coming-dot{display:inline-block;width:11px;height:11px;border-radius:50%;background:#9db2c9;margin-right:7px}
 .side-divider{height:1px;background:#173043;margin:20px 8px 0}
 .side-bottom{margin-top:auto;color:#a9bfd2;padding:10px 8px 0}
@@ -185,9 +191,9 @@ h1 span{color:var(--cyan)}
     <a class="nav-item active" href="#home"><span class="icon">⌂</span><span class="nav-text">Home</span></a>
 
     <div class="nav-label">Deployed Nodes</div>
-    <a class="nav-item mobile-node" href="https://tasikfkee.uthmiot.my">
+    <a class="nav-item mobile-node" href="https://tasikfkee.uthmiot.my" aria-label="Tasik Kemajuan dashboard">
       <span class="icon">♢</span>
-      <span class="nav-text">TASIK KEMAJUAN<div class="node-status"><span class="online-dot"></span>Online</div></span>
+      <span class="nav-text">TASIK KEMAJUAN<div id="sidebarNodeStatus" class="node-status status-online"><span class="online-dot"></span>Online</div></span>
     </a>
 
     <div class="side-divider"></div>
@@ -231,7 +237,7 @@ h1 span{color:var(--cyan)}
 
   <article class="node-card">
     <div class="node-photo">
-      <div class="status-badge"><span class="online-dot"></span> ONLINE</div>
+      <div id="nodeStatusBadge" class="status-badge status-online"><span class="online-dot"></span> ONLINE</div>
     </div>
     <div class="node-main">
       <div class="node-heading">
@@ -245,8 +251,8 @@ h1 span{color:var(--cyan)}
     </div>
     <div class="node-side">
       <div>
-        <div class="stat-block"><div class="stat-label">Status</div><div class="stat-value"><span class="online-dot"></span>Online</div></div>
-        <div class="stat-block"><div class="stat-label">Last Update</div><div class="stat-value">◷ &nbsp;2 minutes ago</div></div>
+        <div class="stat-block"><div class="stat-label">Status</div><div id="nodeStatusValue" class="stat-value status-online"><span class="online-dot"></span>Online</div></div>
+        <div class="stat-block"><div class="stat-label">Last Update</div><div id="nodeLastUpdate" class="stat-value">◷ &nbsp;--</div></div>
       </div>
       <a class="open-btn" href="https://tasikfkee.uthmiot.my">Open Dashboard &nbsp; →</a>
     </div>
@@ -267,7 +273,7 @@ h1 span{color:var(--cyan)}
 <section class="info-card" id="about">
   <div class="info-head"><span class="info-icon">●</span> ABOUT UTHM IoT</div>
   <p>UTHM IoT is an initiative to integrate IoT technology in monitoring, research and educational activities across Universiti Tun Hussein Onn Malaysia. This platform provides real-time data, insights and visualization from various IoT deployments.</p>
-  <a class="info-btn" href="#developer">Learn More &nbsp; →</a>
+  <a class="info-btn" href="about.html">Learn More &nbsp; →</a>
 </section>
 
 <section class="info-card">
@@ -289,5 +295,57 @@ h1 span{color:var(--cyan)}
 
 <footer class="footer">© 2026 UTHM IoT · Universiti Tun Hussein Onn Malaysia · uthmiot.my</footer>
 </main>
+<script>
+/* Live Tasik Kemajuan status: the API's status field is the source of truth. */
+(function(){
+  const API="https://api.veltrixrobotic.com";
+  const latestUrl=API+"/api/tasikfkee/latest";
+  const sidebar=document.getElementById("sidebarNodeStatus");
+  const badge=document.getElementById("nodeStatusBadge");
+  const value=document.getElementById("nodeStatusValue");
+  const last=document.getElementById("nodeLastUpdate");
+  if(!sidebar && !badge && !value) return;
+
+  function isOnline(status){ return String(status||"").toUpperCase()==="ONLINE"; }
+  function dot(on){ return '<span class="'+(on?'online-dot':'offline-dot')+'"></span>'; }
+  function label(on){ return on ? "Online" : "Offline"; }
+  function formatTime(v){
+    if(!v) return "--";
+    const d=new Date(v);
+    if(Number.isNaN(d.getTime())) return "--";
+    return d.toLocaleString("en-MY",{dateStyle:"medium",timeStyle:"short"});
+  }
+  function apply(status, received){
+    const on=isOnline(status);
+    if(sidebar){
+      sidebar.className="node-status "+(on?"status-online":"status-offline");
+      sidebar.innerHTML=dot(on)+label(on);
+    }
+    if(badge){
+      badge.className="status-badge "+(on?"status-online":"status-offline");
+      badge.innerHTML=dot(on)+" "+(on?"ONLINE":"OFFLINE");
+    }
+    if(value){
+      value.className="stat-value "+(on?"status-online":"status-offline");
+      value.innerHTML=dot(on)+label(on);
+    }
+    if(last) last.textContent="◷  "+formatTime(received);
+  }
+  async function sync(){
+    try{
+      const r=await fetch(latestUrl,{cache:"no-store"});
+      if(!r.ok) throw new Error("HTTP "+r.status);
+      const x=await r.json();
+      apply(x.status, x.received_at || x.last_seen);
+    }catch(e){
+      // If the status endpoint cannot be reached, fail safe to OFFLINE.
+      apply("OFFLINE", null);
+      console.warn("UTHM IoT status sync:",e);
+    }
+  }
+  sync();
+  setInterval(sync,5000);
+})();
+</script>
 </body>
 </html>

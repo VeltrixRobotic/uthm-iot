@@ -10,8 +10,47 @@
 <style>
 :root{--bg:#020b13;--panel:#061521;--panel2:#081b2a;--line:#0d3852;--cyan:#08b8ff;--blue:#0787ff;--text:#f4f8fc;--muted:#a9bfd2;--green:#37dc50;--sidebar:226px}
 *{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(circle at 70% 0%,#08263a 0,#020b13 38%,#01070c 100%);color:var(--text);font-family:Inter,Segoe UI,Arial,sans-serif;font-size:15px}a{color:inherit;text-decoration:none}
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:var(--sidebar);padding:24px 13px 18px;background:linear-gradient(180deg,#03111d 0%,#020b13 100%);border-right:1px solid #0d4665;z-index:20;display:flex;flex-direction:column}.brand{text-align:center;margin-bottom:27px}.brand-mark{font-size:35px;font-weight:800;letter-spacing:-2px}.brand-mark span{color:var(--cyan)}.brand-sub{font-size:9px;letter-spacing:1.4px;color:#d6e5ef;margin-top:2px}.nav{display:flex;flex-direction:column;gap:4px}.nav-label{color:#91abc0;font-size:13px;text-transform:uppercase;margin:25px 8px 8px;letter-spacing:.2px}.nav-item{display:flex;align-items:center;gap:14px;padding:13px 14px;border-radius:8px;color:#edf6fc;transition:.2s}.nav-item:hover{background:#082337}.nav-item.active{background:linear-gradient(90deg,#087ff2,#0877e8);box-shadow:0 8px 20px #006be633}.icon{width:24px;text-align:center;font-size:22px}.side-divider{height:1px;background:#173043;margin:20px 8px 0}.side-bottom{margin-top:auto;color:#a9bfd2;padding:10px 8px 0}.side-bottom strong{display:block;color:white;margin-bottom:5px}.side-bottom small{line-height:1.6}
-.online-dot,.offline-dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:7px;vertical-align:middle}.online-dot{background:var(--green);box-shadow:0 0 12px #37dc50}.offline-dot{background:#ff3b45;box-shadow:0 0 12px #ff3b45}.status-online{color:#8ff6a0}.status-offline{color:#ff8b91}.status-checking{color:#73d8ff}
+.sidebar{
+  position:fixed;left:0;top:0;bottom:0;width:var(--sidebar);
+  padding:24px 13px 18px;
+  background:linear-gradient(180deg,#03111d 0%,#020b13 100%);
+  border-right:1px solid #0d4665;
+  z-index:20;
+  display:flex;flex-direction:column;
+}
+.brand{text-align:center;margin-bottom:27px}
+.brand-mark{font-size:35px;font-weight:800;letter-spacing:-2px}
+.brand-mark span{color:var(--cyan)}
+.brand-sub{font-size:9px;letter-spacing:1.4px;color:#d6e5ef;margin-top:2px}
+.nav{display:flex;flex-direction:column;gap:4px}
+.nav-label{
+  color:#91abc0;font-size:13px;text-transform:uppercase;
+  margin:25px 8px 8px;letter-spacing:.2px
+}
+.nav-item{
+  display:flex;align-items:center;gap:14px;padding:13px 14px;border-radius:8px;
+  color:#edf6fc;transition:.2s;cursor:pointer
+}
+.nav-item:hover{background:#082337}
+.node-nav-icon img{width:34px;height:34px;object-fit:contain;display:block}
+.mobile-node .node-nav-icon{border-radius:9px;overflow:hidden}
+.nav-item.active{background:linear-gradient(90deg,#087ff2,#0877e8);box-shadow:0 8px 20px #006be633}
+.icon{width:38px;height:38px;flex:0 0 38px;text-align:center;font-size:22px;display:grid;place-items:center}
+.node-status{font-size:13px;color:#b8cfe0;margin-top:3px}
+.online-dot,.offline-dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:7px;vertical-align:middle}
+.online-dot{background:var(--green);box-shadow:0 0 12px #37dc50}
+.offline-dot{background:#ff3b45;box-shadow:0 0 12px #ff3b45}
+.status-online{color:#8ff6a0}
+.status-offline{color:#ff8b91}
+.status-checking{color:#73d8ff}
+.status-badge.status-checking{background:#08283ae8;border-color:#19a9e8}
+.status-badge.status-online{background:#0c2b19e8;border-color:#2ccf52}
+.status-badge.status-offline{background:#351318e8;border-color:#ff3b45}
+.coming-dot{display:inline-block;width:11px;height:11px;border-radius:50%;background:#9db2c9;margin-right:7px}
+.side-divider{height:1px;background:#173043;margin:20px 8px 0}
+.side-bottom{margin-top:auto;color:#a9bfd2;padding:10px 8px 0}
+.side-bottom strong{display:block;color:white;margin-bottom:5px}
+.side-bottom small{line-height:1.6}
 .main{margin-left:var(--sidebar);min-height:100vh}.hero{min-height:380px;padding:70px 7vw 52px;position:relative;overflow:hidden;background-image:linear-gradient(90deg,rgba(2,10,16,.96) 0%,rgba(2,12,19,.80) 38%,rgba(2,12,19,.25) 82%,rgba(2,12,19,.50) 100%),linear-gradient(180deg,rgba(2,10,18,.05),rgba(2,10,18,.9)),url("../assets/hero-campus.jpg");background-size:cover;background-position:center 18%;border-bottom:1px solid #0b334a}.hero:after{content:"";position:absolute;inset:auto 0 0;height:100px;background:linear-gradient(transparent,var(--bg));pointer-events:none}.hero-inner{position:relative;z-index:2;max-width:880px}.eyebrow{display:flex;align-items:center;gap:10px;color:var(--cyan);font-size:12px;letter-spacing:3px;font-weight:800;text-transform:uppercase}.eyebrow:before{content:"";width:38px;height:3px;background:var(--cyan)}h1{font-size:clamp(48px,6vw,76px);line-height:.98;margin:15px 0 16px;font-weight:800;letter-spacing:-3px}h1 span{color:var(--cyan)}.hero-copy{max-width:760px;color:#d7e6f1;font-size:18px;line-height:1.65}.content{max-width:1180px;margin:0 auto;padding:54px 42px 80px}.section{margin-bottom:58px}.section-title{font-size:13px;letter-spacing:2.4px;color:var(--cyan);font-weight:800;margin-bottom:10px}.section-heading{font-size:34px;letter-spacing:-1px;margin:0 0 14px}.section-desc{color:var(--muted);line-height:1.75;max-width:820px;margin:0}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:26px}.card{background:linear-gradient(180deg,rgba(8,27,42,.94),rgba(5,19,30,.94));border:1px solid #0c4564;border-radius:10px;padding:25px;box-shadow:0 12px 35px #00000024}.card-icon{width:42px;height:42px;border:1px solid #0bbcff66;border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--cyan);font-size:20px;background:#061b2a;margin-bottom:18px}.card h3{margin:0 0 9px;font-size:18px}.card p{margin:0;color:#a9bfd2;line-height:1.65}.story{display:grid;grid-template-columns:1.15fr .85fr;gap:22px;align-items:stretch}.story-panel{background:linear-gradient(135deg,#071b2a,#04111c);border:1px solid #0d4562;border-radius:12px;padding:31px}.story-panel h2{margin:0 0 14px;font-size:30px;letter-spacing:-.7px}.story-panel p{color:#b9cedd;line-height:1.8;margin:0 0 15px}.quote{display:flex;gap:14px;padding:20px;border-left:3px solid var(--cyan);background:#051522;border-radius:0 8px 8px 0;color:#dceaf4;line-height:1.65}.timeline{display:grid;gap:12px}.step{display:grid;grid-template-columns:50px 1fr;gap:15px;align-items:start;padding:18px;background:#061521;border:1px solid #0c3c57;border-radius:9px}.step-num{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:#062842;color:var(--cyan);border:1px solid #0b86bb;font-weight:800}.step h4{margin:2px 0 6px;font-size:16px}.step p{margin:0;color:#9fb6c8;line-height:1.55}.cta{display:flex;justify-content:space-between;gap:20px;align-items:center;background:linear-gradient(100deg,#06263a,#061521 72%);border:1px solid #0b5a80;border-radius:12px;padding:30px}.cta h2{margin:0 0 7px;font-size:25px}.cta p{margin:0;color:#a9bfd2;line-height:1.6}.btn{display:inline-flex;align-items:center;gap:9px;border:1px solid var(--cyan);border-radius:7px;padding:12px 17px;color:#fff;background:#062337;font-weight:700;white-space:nowrap}.btn:hover{background:#08314a}.footer{text-align:center;padding:25px 20px;color:#70899b;border-top:1px solid #0a2a3e;font-size:12px}
 @media(max-width:850px){:root{--sidebar:0px}.sidebar{position:relative;width:100%;height:auto;padding:14px 15px;border-right:0;border-bottom:1px solid #0d4665}.brand{text-align:left;margin:0 0 12px}.brand-mark{font-size:28px}.nav{display:grid;grid-template-columns:repeat(3,1fr)}.nav-label,.side-divider,.side-bottom{display:none}.nav-item{padding:10px;justify-content:center;font-size:12px;gap:6px}.icon{font-size:17px;width:auto}.main{margin-left:0}.hero{padding:55px 24px 45px;min-height:390px}.content{padding:42px 20px 60px}.grid,.story{grid-template-columns:1fr}.cta{flex-direction:column;align-items:flex-start}.hero-copy{font-size:16px}}
 @media(max-width:520px){.nav{grid-template-columns:repeat(2,1fr)}h1{font-size:49px}.section-heading{font-size:28px}.content{padding-left:15px;padding-right:15px}.card,.story-panel{padding:22px}.cta{padding:24px}}
@@ -23,20 +62,32 @@
     <div class="brand-mark">UTHM <span>IoT</span></div>
     <div class="brand-sub">MONITOR · CONNECT · INNOVATE</div>
   </div>
+
   <nav class="nav">
-    <a class="nav-item" href="/"><span class="icon">⌂</span><span>Home</span></a>
+    <a class="nav-item" href="/"><span class="icon">⌂</span><span class="nav-text">Home</span></a>
+
     <div class="nav-label">Deployed Nodes</div>
-    <a class="nav-item" href="https://tasikfkee.uthmiot.my"><span class="icon">♢</span><span>TASIK KEMAJUAN<div id="sidebarNodeStatus" class="node-status status-online"><span class="online-dot"></span>Online</div></span></a>
+    <a class="nav-item mobile-node" href="https://tasikfkee.uthmiot.my" aria-label="Tasik Kemajuan dashboard">
+      <span class="icon node-nav-icon"><img src="../assets/tasik-kemajuan-icon.png" alt="Tasik Kemajuan logo"></span>
+      <span class="nav-text">TASIK KEMAJUAN<div id="sidebarNodeStatus" class="node-status status-online"><span class="online-dot"></span>Online</div></span>
+    </a>
+
     <div class="side-divider"></div>
     <div class="nav-label">Coming Soon</div>
-    <a class="nav-item" href="/#upcoming"><span class="icon">◇</span><span>Next Node<div class="node-status"><span class="coming-dot"></span>Coming Soon</div></span></a>
-    <a class="nav-item" href="/#upcoming"><span class="icon">◇</span><span>More Nodes<div class="node-status"><span class="coming-dot"></span>Coming Soon</div></span></a>
+    <a class="nav-item" href="/#upcoming"><span class="icon">◇</span><span class="nav-text">Next Node<div class="node-status"><span class="coming-dot"></span>Coming Soon</div></span></a>
+    <a class="nav-item" href="/#upcoming"><span class="icon">◇</span><span class="nav-text">More Nodes<div class="node-status"><span class="coming-dot"></span>Coming Soon</div></span></a>
+
     <div class="side-divider"></div>
     <div class="nav-label">About</div>
-    <a class="nav-item active" href="/aboututhmiot/"><span class="icon">ⓘ</span><span>About UTHM IoT</span></a>
-    <a class="nav-item" href="/developer/"><span class="icon">♙</span><span>Developer</span></a>
+    <a class="nav-item active" href="/aboututhmiot/"><span class="icon">ⓘ</span><span class="nav-text">About UTHM IoT</span></a>
+    <a class="nav-item" href="/developer/"><span class="icon">♙</span><span class="nav-text">Developer</span></a>
   </nav>
-  <div class="side-bottom"><strong>▣ &nbsp; UTHM IoT</strong><div>uthmiot.my</div><br><small>Smart Monitoring<br>for a Sustainable Future</small></div>
+
+  <div class="side-bottom">
+    <strong>▣ &nbsp; UTHM IoT</strong>
+    <div>uthmiot.my</div><br>
+    <small>Smart Monitoring<br>for a Sustainable Future</small>
+  </div>
 </aside>
 <main class="main">
 <section class="hero"><div class="hero-inner"><div class="eyebrow">ABOUT UTHM IoT</div><h1>Connecting <span>data</span> to campus.</h1><p class="hero-copy">UTHM IoT is an initiative to integrate Internet of Things technology into monitoring, research and educational activities across Universiti Tun Hussein Onn Malaysia.</p></div></section>

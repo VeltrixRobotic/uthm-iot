@@ -53,8 +53,10 @@ button{font:inherit}
   color:#edf6fc;transition:.2s;cursor:pointer
 }
 .nav-item:hover{background:#082337}
+.node-nav-icon img{width:34px;height:34px;object-fit:contain;display:block}
+.mobile-node .node-nav-icon{border-radius:9px;overflow:hidden}
 .nav-item.active{background:linear-gradient(90deg,#087ff2,#0877e8);box-shadow:0 8px 20px #006be633}
-.icon{width:24px;text-align:center;font-size:22px}
+.icon{width:38px;height:38px;flex:0 0 38px;text-align:center;font-size:22px;display:grid;place-items:center}
 .node-status{font-size:13px;color:#b8cfe0;margin-top:3px}
 .online-dot,.offline-dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:7px;vertical-align:middle}
 .online-dot{background:var(--green);box-shadow:0 0 12px #37dc50}
@@ -114,9 +116,11 @@ h1 span{color:var(--cyan)}
 .node-main{padding:9px 0}
 .node-heading{display:flex;align-items:center;gap:13px}
 .node-symbol{
- width:61px;height:61px;border:1px solid #087db5;border-radius:9px;
- display:grid;place-items:center;color:#00b8ff;font-size:32px
+ width:64px;height:64px;flex:0 0 64px;border:1px solid #087db5;border-radius:12px;
+ background:#020c18;display:grid;place-items:center;overflow:hidden;
+ box-shadow:0 0 0 1px #0b3146 inset,0 8px 20px #0005
 }
+.node-symbol img{width:54px;height:54px;object-fit:contain;display:block}
 .node-heading h3{margin:0;font-size:22px}
 .arrow{color:var(--cyan);font-size:30px}
 .node-type{color:#c0d4e1;margin-top:5px;line-height:1.4}
@@ -196,7 +200,7 @@ h1 span{color:var(--cyan)}
 
     <div class="nav-label">Deployed Nodes</div>
     <a class="nav-item mobile-node" href="https://tasikfkee.uthmiot.my" aria-label="Tasik Kemajuan dashboard">
-      <span class="icon">♢</span>
+      <span class="icon node-nav-icon"><img src="assets/tasik-kemajuan-icon.png" alt="Tasik Kemajuan logo"></span>
       <span class="nav-text">TASIK KEMAJUAN<div id="sidebarNodeStatus" class="node-status status-online"><span class="online-dot"></span>Online</div></span>
     </a>
 

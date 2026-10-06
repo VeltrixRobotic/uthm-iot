@@ -63,7 +63,7 @@
 </main>
 
 <script>
-(function(){const API="https://api.veltrixrobotic.com";const el=document.getElementById("sidebarNodeStatus");if(!el)return;function sync(){fetch(API+"/api/tasikfkee/latest",{cache:"no-store"}).then(r=>{if(!r.ok)throw Error(r.status);return r.json()}).then(x=>{const on=String(x.status||"").toUpperCase()==="ONLINE";el.className="node-status "+(on?"status-online":"status-offline");el.innerHTML='<span class="'+(on?"online-dot":"offline-dot")+'"></span>'+(on?"Online":"Offline")}).catch(()=>{el.className="node-status status-offline";el.innerHTML='<span class="offline-dot"></span>Offline'})}sync();setInterval(sync,5000)})();
+(function(){const urls=["https://api.veltrixrobotic.com/api/tasikfkee/latest","https://tasikfkee.uthmiot.my/api/tasikfkee/latest"];const el=document.getElementById("sidebarNodeStatus");if(!el)return;async function sync(){for(const url of urls){try{const r=await fetch(url,{cache:"no-store",mode:"cors"});if(!r.ok)throw Error(r.status);const x=await r.json();const on=String(x.status||"").toUpperCase()==="ONLINE";el.className="node-status "+(on?"status-online":"status-offline");el.innerHTML='<span class="'+(on?"online-dot":"offline-dot")+'"></span>'+(on?"Online":"Offline");return}catch(e){}}el.className="node-status status-offline";el.innerHTML='<span class="offline-dot"></span>Offline'}sync();setInterval(sync,5000)})();
 </script>
 </body>
 </html>

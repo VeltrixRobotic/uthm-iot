@@ -298,8 +298,12 @@ h1 span{color:var(--cyan)}
 <script>
 /* Live Tasik Kemajuan status: the API's status field is the source of truth. */
 (function(){
-  const API="https://api.veltrixrobotic.com";
-  const latestUrl=API+"/api/tasikfkee/latest";
+  // Try the same API used by the Tasik Kemajuan dashboard first.
+  // The dashboard host is kept as a fallback in case the API host has a stricter CORS policy.
+  const latestUrls=[
+    "https://api.veltrixrobotic.com/api/tasikfkee/latest",
+    "https://tasikfkee.uthmiot.my/api/tasikfkee/latest"
+  ];
   const sidebar=document.getElementById("sidebarNodeStatus");
   const badge=document.getElementById("nodeStatusBadge");
   const value=document.getElementById("nodeStatusValue");
@@ -332,16 +336,20 @@ h1 span{color:var(--cyan)}
     if(last) last.textContent="◷  "+formatTime(received);
   }
   async function sync(){
-    try{
-      const r=await fetch(latestUrl,{cache:"no-store"});
-      if(!r.ok) throw new Error("HTTP "+r.status);
-      const x=await r.json();
-      apply(x.status, x.received_at || x.last_seen);
-    }catch(e){
-      // If the status endpoint cannot be reached, fail safe to OFFLINE.
-      apply("OFFLINE", null);
-      console.warn("UTHM IoT status sync:",e);
+    let lastError=null;
+    for(const url of latestUrls){
+      try{
+        const r=await fetch(url,{cache:"no-store",mode:"cors"});
+        if(!r.ok) throw new Error("HTTP "+r.status);
+        const x=await r.json();
+        // The backend status is authoritative. Do not infer online state from stale UI text.
+        apply(x.status, x.received_at || x.last_seen);
+        return;
+      }catch(e){ lastError=e; }
     }
+    // Both live endpoints failed. Keep the UI honest rather than presenting stale data as online.
+    apply("OFFLINE", null);
+    console.warn("UTHM IoT status sync failed:",lastError);
   }
   sync();
   setInterval(sync,5000);

@@ -105,6 +105,10 @@
   .section-desc{font-size:15px;line-height:1.6}
 }
 
+<style id="VELTRIX_MAINTENANCE_STATUS_V2">
+.maintenance-dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:#ffc448;box-shadow:0 0 8px rgba(255,196,72,.45);margin-right:5px}
+.status-maintenance{color:#ffc448 !important}
+</style>
 </style>
 </head>
 <body>
@@ -194,10 +198,25 @@
   const mobile=document.getElementById("mobileNodeStatus");
   if(!el && !mobile) return;
   function apply(status,state){
-    const online=String(status||"").toUpperCase()==="ONLINE";
+    const normalized=String(status||"").toUpperCase();
     const checking=state==="unavailable";
-    const cls="node-status "+(checking?"status-checking":online?"status-online":"status-offline");
-    const html='<span class="'+(checking?"coming-dot":online?"online-dot":"offline-dot")+'"></span>'+(checking?"Connecting…":online?"Online":"Offline");
+    const maintenance=!checking && normalized==="MAINTENANCE";
+    const online=!checking && normalized==="ONLINE";
+    const kind=checking?"checking":maintenance?"maintenance":online?"online":"offline";
+    const cls="node-status "+(
+      kind==="checking"?"status-checking":
+      kind==="maintenance"?"status-maintenance":
+      kind==="online"?"status-online":"status-offline"
+    );
+    const html='<span class="'+(
+      kind==="checking"?"coming-dot":
+      kind==="maintenance"?"maintenance-dot":
+      kind==="online"?"online-dot":"offline-dot"
+    )+'"></span>'+(
+      kind==="checking"?"Connecting…":
+      kind==="maintenance"?"Maintenance":
+      kind==="online"?"Online":"Offline"
+    );
     if(el){el.className=cls;el.innerHTML=html;}
     if(mobile){mobile.className=cls;mobile.innerHTML=html;}
   }

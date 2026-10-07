@@ -80,6 +80,10 @@ button{font:inherit}
 .status-badge.status-checking{background:#08283ae8;border-color:#19a9e8}
 .status-badge.status-online{background:#0c2b19e8;border-color:#2ccf52}
 .status-badge.status-offline{background:#351318e8;border-color:#ff3b45}
+.status-badge.status-maintenance{background:#3a2b0fe8;border-color:#ffc448;color:#ffc448}
+.status-maintenance{color:#ffc448}
+.maintenance-dot{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:7px;vertical-align:middle;background:#ffc448;box-shadow:0 0 12px #ffc448}
+
 .coming-dot{display:inline-block;width:11px;height:11px;border-radius:50%;background:#9db2c9;margin-right:7px}
 .side-divider{height:1px;background:#173043;margin:20px 8px 0}
 .side-bottom{margin-top:auto;color:#a9bfd2;padding:10px 8px 0}
@@ -471,24 +475,61 @@ h1 span{color:var(--cyan)}
   }
   function apply(status, received, state){
     const normalized=String(status||"").toUpperCase();
-    const kind=state==="unavailable" ? "checking" : (normalized==="ONLINE" ? "online" : "offline");
-    const label=state==="unavailable" ? "Connecting…" : (kind==="online" ? "Online" : "Offline");
+
+    let kind="checking";
+    let label="Connecting…";
+
+    if(state!=="unavailable"){
+      if(normalized==="ONLINE"){
+        kind="online";
+        label="Online";
+      }else if(normalized==="MAINTENANCE"){
+        kind="maintenance";
+        label="Maintenance";
+      }else{
+        kind="offline";
+        label="Offline";
+      }
+    }
+
+    function dot(kind){
+      if(kind==="online") return '<span class="online-dot"></span>';
+      if(kind==="offline") return '<span class="offline-dot"></span>';
+      if(kind==="maintenance") return '<span class="maintenance-dot"></span>';
+      return '<span class="coming-dot"></span>';
+    }
+
+    function statusClass(kind){
+      return kind==="online" ? "status-online"
+        : kind==="offline" ? "status-offline"
+        : kind==="maintenance" ? "status-maintenance"
+        : "status-checking";
+    }
+
     if(sidebar){
-      sidebar.className="node-status "+(kind==="online"?"status-online":kind==="offline"?"status-offline":"status-checking");
+      sidebar.className="node-status "+statusClass(kind);
       sidebar.innerHTML=dot(kind)+label;
     }
+
     if(mobile){
-      mobile.className="node-status "+(kind==="online"?"status-online":kind==="offline"?"status-offline":"status-checking");
+      mobile.className="node-status "+statusClass(kind);
       mobile.innerHTML=dot(kind)+label;
     }
+
     if(badge){
-      badge.className="status-badge "+(kind==="online"?"status-online":kind==="offline"?"status-offline":"status-checking");
-      badge.innerHTML=dot(kind)+(kind==="online"?" ONLINE":kind==="offline"?" OFFLINE":" CONNECTING…");
+      badge.className="status-badge "+statusClass(kind);
+      badge.innerHTML=dot(kind)+
+        (kind==="online" ? " ONLINE"
+        : kind==="offline" ? " OFFLINE"
+        : kind==="maintenance" ? " MAINTENANCE"
+        : " CONNECTING…");
     }
+
     if(value){
-      value.className="stat-value "+(kind==="online"?"status-online":kind==="offline"?"status-offline":"status-checking");
+      value.className="stat-value "+statusClass(kind);
       value.innerHTML=dot(kind)+label;
     }
+
     if(last) last.textContent="◷  "+formatTime(received);
   }
 
